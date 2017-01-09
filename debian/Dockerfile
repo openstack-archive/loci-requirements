@@ -29,8 +29,8 @@ RUN set -x \
 	&& python get-pip.py \
 	&& rm get-pip.py \
 	&& mkdir /root/packages \
-	&& curl https://git.openstack.org/cgit/openstack/requirements/plain/global-requirements.txt > /root/packages/global-requirements.txt \
-	&& curl https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt > /root/packages/upper-constraints.txt \
+	&& curl https://raw.githubusercontent.com/openstack/requirements/master/global-requirements.txt > /root/packages/global-requirements.txt \
+	&& curl https://raw.githubusercontent.com/openstack/requirements/master/upper-constraints.txt > /root/packages/upper-constraints.txt \
 	# NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
 	&& sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
 	&& pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
