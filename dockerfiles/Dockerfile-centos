@@ -55,6 +55,7 @@ RUN set -x \
     && sed -i "s/spec-cleaner===0.9.1/spec-cleaner===0.9.0/" /root/packages/upper-constraints.txt \
     # NOTE(Pete Birley): end bug workaround
     && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
+        uwsgi \
     && yum history -y undo $(yum history list gcc | tail -2 | head -1 | awk '{ print $1}') \
     && yum clean all \
     && rm -rf /tmp/* /root/.cache
