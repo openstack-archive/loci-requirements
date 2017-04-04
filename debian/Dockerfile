@@ -5,8 +5,6 @@ ARG OVERRIDE=override
 ADD $OVERRIDE /
 
 RUN set -x \
-    # NOTE(SamYaple): backports is only used for liberasurecode-dev
-    && echo "deb http://deb.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/backports.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
