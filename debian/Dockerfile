@@ -11,6 +11,7 @@ RUN set -x \
         git \
         liberasurecode-dev \
         libffi-dev \
+        libkrb5-dev \
         libldap2-dev \
         libmysqlclient-dev \
         libnss3-dev \
@@ -23,7 +24,6 @@ RUN set -x \
         libyaml-dev \
         libz-dev \
         pkg-config \
-        python \
         python-dev \
     && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python get-pip.py \
@@ -48,6 +48,7 @@ RUN set -x \
         git \
         liberasurecode-dev \
         libffi-dev \
+        libkrb5-dev \
         libldap2-dev \
         libmysqlclient-dev \
         libnss3-dev \
