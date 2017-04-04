@@ -1,5 +1,9 @@
 FROM centos:7
 
+ARG OVERRIDE=override
+
+ADD $OVERRIDE /
+
 ENV OPENSTACK_VERSION=newton
 
 RUN set -x \
