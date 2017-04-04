@@ -1,5 +1,9 @@
 FROM ubuntu:xenial
 
+ARG OVERRIDE=override
+
+ADD $OVERRIDE /
+
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
