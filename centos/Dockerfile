@@ -7,14 +7,7 @@ ARG OVERRIDE=override
 
 ADD $OVERRIDE /
 
-ENV OPENSTACK_VERSION=newton
-
 RUN set -x \
-    # NOTE(Pete Birley): CentOS-OpenStack repo is only used for liberasurecode-devel
-    && curl -sSL https://raw.githubusercontent.com/rdo-infra/centos-release-openstack/${OPENSTACK_VERSION}-rdo/CentOS-OpenStack.repo > /etc/yum.repos.d/CentOS-OpenStack.repo \
-    && sed -i "s/OPENSTACK_VERSION/${OPENSTACK_VERSION}/g" /etc/yum.repos.d/CentOS-OpenStack.repo \
-    && sed -i "/\[centos-openstack-${OPENSTACK_VERSION}\]/s/.*/&\nincludepkgs=liberasurecode*/" /etc/yum.repos.d/CentOS-OpenStack.repo \
-    && curl -sSL https://raw.githubusercontent.com/rdo-infra/centos-release-openstack/newton-rdo/RPM-GPG-KEY-CentOS-SIG-Cloud > /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud \
     # NOTE(Pete Birley): libffi-devel does not like being uninstalled on CentOS so we install it seperatly, all of its dependencies are already installed in the docker base image.
     && yum install --setopt=tsflags=nodocs -y \
         libffi-devel \
