@@ -1,5 +1,8 @@
 FROM ubuntu:xenial
 
+ENV PROJECT=requirements
+ARG PROJECT_REPO=https://git.openstack.org/openstack/${PROJECT}
+ARG PROJECT_REF=master
 ARG OVERRIDE=override
 
 ADD $OVERRIDE /
@@ -31,8 +34,10 @@ RUN set -x \
     && python get-pip.py \
     && rm get-pip.py \
     && mkdir /root/packages \
-    && curl -sSL https://raw.githubusercontent.com/openstack/requirements/master/global-requirements.txt > /root/packages/global-requirements.txt \
-    && curl -sSL https://raw.githubusercontent.com/openstack/requirements/master/upper-constraints.txt > /root/packages/upper-constraints.txt \
+    && git init /tmp/requirements \
+    && git --git-dir /tmp/requirements/.git fetch --depth 1 $PROJECT_REPO $PROJECT_REF \
+    && git --work-tree /tmp/requirements --git-dir /tmp/requirements/.git checkout FETCH_HEAD \
+    && mv /tmp/requirements/global-requirements.txt /tmp/requirements/upper-constraints.txt /root/packages/ \
     # NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
     && sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
     && pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
