@@ -51,9 +51,6 @@ RUN set -x \
     && sed -i "s/if arg in ('-d', '--debug'):/if arg == '--debug':/g" /tmp/python-nss/setup.py \
     && pip wheel -w /root/packages/ $(grep dogtag-pki /root/packages/upper-constraints.txt) /tmp/python-nss/ \
     # NOTE(SamYaple): end bug workaround
-    # NOTE(Pete Birley): spec-cleaner 0.9.1 requires a newer version of re than comes with Python 2.7.5. https://bugs.launchpad.net/openstack-requirements/+bug/1655509
-    && sed -i "s/spec-cleaner===0.9.1/spec-cleaner===0.9.0/" /root/packages/upper-constraints.txt \
-    # NOTE(Pete Birley): end bug workaround
     && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
         uwsgi \
     && yum history -y undo $(yum history list gcc | tail -2 | head -1 | awk '{ print $1}') \
