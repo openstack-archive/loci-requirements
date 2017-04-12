@@ -31,6 +31,7 @@ RUN set -x \
         libz-dev \
         pkg-config \
         python-dev \
+    # TODO(pbourke): replace with python-pip package when we move to stretch
     && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
     && python get-pip.py \
     && rm get-pip.py \
