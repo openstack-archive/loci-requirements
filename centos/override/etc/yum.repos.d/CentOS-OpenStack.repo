@@ -4,7 +4,7 @@
 # repos. This might be a problem and is something to watch.
 # TODO(SamYaple): Find out more info on this subject
 [centos-openstack-ocata]
-includepkgs=liberasurecode*
+includepkgs=liberasurecode* python-pip*
 name=CentOS-7 - OpenStack Ocata
 baseurl=http://mirror.centos.org/centos/7/cloud/$basearch/openstack-ocata/
 gpgcheck=1
