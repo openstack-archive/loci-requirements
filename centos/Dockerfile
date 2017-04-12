@@ -9,9 +9,9 @@ ADD $OVERRIDE /
 
 RUN set -x \
     # NOTE(Pete Birley): libffi-devel does not like being uninstalled on CentOS so we install it seperatly, all of its dependencies are already installed in the docker base image.
-    && yum install --setopt=tsflags=nodocs -y \
+    && yum install -y \
         libffi-devel \
-    && yum install --setopt=tsflags=nodocs -y  \
+    && yum install -y  \
         gcc \
         gcc-c++ \
         make \
