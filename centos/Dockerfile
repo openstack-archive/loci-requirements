@@ -35,12 +35,10 @@ RUN set -x \
         pkgconfig \
         python \
         python-devel \
+        python-pip \
         libgcrypt \
         nss-util \
         systemd-devel \
-    && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python get-pip.py \
-    && rm get-pip.py \
     && mkdir /root/packages \
     && git init /tmp/requirements \
     && git --git-dir /tmp/requirements/.git fetch --depth 1 $PROJECT_REPO $PROJECT_REF \
@@ -48,6 +46,7 @@ RUN set -x \
     && mv /tmp/requirements/global-requirements.txt /tmp/requirements/upper-constraints.txt /root/packages/ \
     # NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
     && sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
+    && pip install -U pip wheel setuptools \
     && pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
     && mkdir /tmp/python-nss \
     && tar xf /tmp/python-nss-*.tar.bz2 -C /tmp/python-nss --strip-components=1 \
