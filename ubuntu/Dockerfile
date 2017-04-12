@@ -12,7 +12,6 @@ RUN set -x \
     && apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
-        curl \
         git \
         liberasurecode-dev \
         libffi-dev \
@@ -31,14 +30,13 @@ RUN set -x \
         pkg-config \
         python \
         python-dev \
-    && curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py \
-    && python get-pip.py \
-    && rm get-pip.py \
+        python-pip \
     && mkdir /root/packages \
     && git init /tmp/requirements \
     && git --git-dir /tmp/requirements/.git fetch --depth 1 $PROJECT_REPO $PROJECT_REF \
     && git --work-tree /tmp/requirements --git-dir /tmp/requirements/.git checkout FETCH_HEAD \
     && mv /tmp/requirements/global-requirements.txt /tmp/requirements/upper-constraints.txt /root/packages/ \
+    && pip install -U pip wheel setuptools \
     # NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
     && sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
     && pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
@@ -52,7 +50,6 @@ RUN set -x \
     && apt-get purge -y --auto-remove \
         build-essential \
         ca-certificates \
-        curl \
         git \
         liberasurecode-dev \
         libffi-dev \
