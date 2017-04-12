@@ -22,6 +22,7 @@ RUN set -x \
         libpq-dev \
         libsasl2-dev \
         libssl-dev \
+        libsystemd-dev \
         libxml2-dev \
         libxslt1-dev \
         libvirt-dev \
@@ -61,6 +62,7 @@ RUN set -x \
         libpq-dev \
         libsasl2-dev \
         libssl-dev \
+        libsystemd-dev \
         libxml2-dev \
         libxslt1-dev \
         libvirt-dev \
