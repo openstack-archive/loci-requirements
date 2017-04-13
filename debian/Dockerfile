@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 
 ENV PROJECT=requirements
 ARG PROJECT_REPO=https://git.openstack.org/openstack/${PROJECT}
