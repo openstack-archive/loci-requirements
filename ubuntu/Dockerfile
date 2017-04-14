@@ -1,6 +1,7 @@
 FROM ubuntu:xenial
 
-ENV PROJECT=requirements
+ENV PROJECT=requirements \
+    PATH=/builder/bin:$PATH
 ARG PROJECT_REPO=https://git.openstack.org/openstack/${PROJECT}
 ARG PROJECT_REF=master
 ARG OVERRIDE=override
@@ -31,12 +32,15 @@ RUN set -x \
         python \
         python-dev \
         python-pip \
+        python-virtualenv \
     && mkdir /root/packages \
     && git init /tmp/requirements \
     && git --git-dir /tmp/requirements/.git fetch --depth 1 $PROJECT_REPO $PROJECT_REF \
     && git --work-tree /tmp/requirements --git-dir /tmp/requirements/.git checkout FETCH_HEAD \
     && mv /tmp/requirements/global-requirements.txt /tmp/requirements/upper-constraints.txt /root/packages/ \
-    && pip install -U pip wheel setuptools \
+    && python -m virtualenv /builder \
+    && pip install -U pip \
+    && pip install -U wheel setuptools \
     # NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
     && sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
     && pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
