@@ -9,9 +9,9 @@ ARG OVERRIDE=override
 ADD $OVERRIDE /
 
 RUN set -x \
-    # NOTE(Pete Birley): libffi-devel does not like being uninstalled on CentOS so we install it seperatly, all of its dependencies are already installed in the docker base image.
     && yum upgrade -y \
-    && yum install -y libffi-devel \
+    # NOTE(SamYaple): https://bugs.centos.org/view.php?id=10750
+    && yum install -y --setopt=tsflags=docs libffi-devel \
     && yum install -y  \
         gcc \
         gcc-c++ \
@@ -58,6 +58,6 @@ RUN set -x \
     # NOTE(SamYaple): end bug workaround
     && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
         uwsgi \
-    && yum history -y undo $(yum history list gcc | tail -2 | head -1 | awk '{ print $1}') \
+    && yum history -y undo 3 \
     && yum clean all \
     && rm -rf /tmp/* /root/.cache
