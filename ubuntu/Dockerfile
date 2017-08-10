@@ -1,4 +1,5 @@
-FROM ubuntu:xenial
+ARG FROM=ubuntu:xenial
+FROM ${FROM}
 
 ENV PROJECT=requirements \
     PATH=/builder/bin:$PATH

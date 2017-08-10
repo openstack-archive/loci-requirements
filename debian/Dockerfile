@@ -1,4 +1,5 @@
-FROM debian:jessie-slim
+ARG FROM=debian:jessie-slim
+FROM ${FROM}
 
 ENV PROJECT=requirements \
     PATH=/builder/bin:$PATH
