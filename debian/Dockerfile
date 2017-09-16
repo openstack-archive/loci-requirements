@@ -52,6 +52,7 @@ RUN set -x \
     && pip wheel -w /root/packages/ $(grep dogtag-pki /root/packages/upper-constraints.txt) /tmp/python-nss/ \
     # NOTE(SamYaple): end bug workaround
     && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
+        bindep==2.5.0 \
         uwsgi \
     && apt-get purge -y --auto-remove \
         build-essential \
