@@ -43,14 +43,6 @@ RUN set -x \
     && python -m virtualenv /builder \
     && pip install -U pip \
     && pip install -U wheel setuptools \
-    # NOTE(SamYaple): There is a bug with python-nss, this is a workaround. https://bugzilla.redhat.com/show_bug.cgi?id=1389739
-    && sed -i '/dogtag-pki/d' /root/packages/global-requirements.txt \
-    && pip download -d /tmp -c /root/packages/upper-constraints.txt python-nss \
-    && mkdir /tmp/python-nss \
-    && tar xf /tmp/python-nss-*.tar.bz2 -C /tmp/python-nss --strip-components=1 \
-    && sed -i "s/if arg in ('-d', '--debug'):/if arg == '--debug':/g" /tmp/python-nss/setup.py \
-    && pip wheel -w /root/packages/ $(grep dogtag-pki /root/packages/upper-constraints.txt) /tmp/python-nss/ \
-    # NOTE(SamYaple): end bug workaround
     && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
         bindep==2.5.0 \
         uwsgi \
