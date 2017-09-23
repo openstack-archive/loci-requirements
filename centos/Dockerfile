@@ -55,3 +55,6 @@ RUN set -x \
     && yum history -y undo 4 5 \
     && yum clean all \
     && rm -rf /tmp/* /root/.cache
+
+FROM scratch
+COPY --from=0 /root/packages/* .
