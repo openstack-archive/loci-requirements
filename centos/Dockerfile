@@ -41,7 +41,7 @@ RUN set -x \
         libgcrypt \
         nss-util \
         systemd-devel \
-    && mkdir /root/packages \
+    && mkdir /wheels/ \
     && git init /tmp/requirements \
     && git --git-dir /tmp/requirements/.git fetch --depth 1 $PROJECT_REPO $PROJECT_REF \
     && git --work-tree /tmp/requirements --git-dir /tmp/requirements/.git checkout FETCH_HEAD \
@@ -49,9 +49,10 @@ RUN set -x \
     && python -m virtualenv /builder \
     && pip install -U pip \
     && pip install -U wheel setuptools \
-    && pip wheel -w /root/packages/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
+    && pip wheel -w /wheels/ -r /root/packages/global-requirements.txt -c /root/packages/upper-constraints.txt \
         bindep==2.5.0 \
         uwsgi \
-    && yum history -y undo 4 5 \
-    && yum clean all \
-    && rm -rf /tmp/* /root/.cache
+    && find . -mindepth 1 -maxdepth 1 -path /wheels -prune -o -exec rm -rf {} +
+
+FROM scratch
+COPY --from=0 /wheels/* /
