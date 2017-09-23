@@ -68,3 +68,6 @@ RUN set -x \
         pkg-config \
         python-dev \
     && rm -rf /var/lib/apt/lists/* /tmp/* /root/.cache
+
+FROM scratch
+COPY --from=0 /root/packages/* /
