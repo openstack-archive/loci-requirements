@@ -1,3 +1,0 @@
-export PROJECT=requirements
-export DISTRO=centos
-export EXTRA=openstack
