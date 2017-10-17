@@ -1,3 +1,0 @@
-export PROJECT=requirements
-export DISTRO=debian
-export EXTRA=backports

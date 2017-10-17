@@ -1,3 +1,0 @@
-# NOTE(SamYaple): backports is only used for liberasurecode-dev
-# TODO(SamYaple): Remove when switching to Stretch
-deb http://deb.debian.org/debian jessie-backports main
